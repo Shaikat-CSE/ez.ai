@@ -33,9 +33,11 @@
             --text-secondary: #4a5568;
             --user-message-bg: #e9ecef;
             --ai-message-bg: #f8f9fa;
-            --nav-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(255, 255, 255, 0.95);
             --border-color: rgba(0,0,0,0.1);
             --glow-color: rgba(139, 92, 246, 0.2);
+            --nav-gradient: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(250, 250, 250, 0.95));
+            --footer-gradient: var(--nav-gradient);
         }
 
         * {
@@ -68,6 +70,7 @@
             padding: 0 2rem;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
+            background: var(--nav-gradient);
         }
 
         .nav-brand {
@@ -141,6 +144,7 @@
             border-top: 1px solid var(--border-color);
             padding: 0 2rem;
             z-index: 1000;
+            background: var(--nav-gradient);
         }
 
         .copyright {
@@ -784,6 +788,283 @@
             0%, 60%, 100% { transform: translateY(0); }
             30% { transform: translateY(-4px); }
         }
+
+        /* Mobile navigation styles */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--chat-bg);
+            z-index: 1001;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem 2rem 2rem; /* Increased top padding */
+            backdrop-filter: blur(10px);
+            padding-top: 4rem;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav a,
+        .mobile-nav button {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 0.75rem; /* Reduced from 1.5rem */
+            right: 0.75rem; /* Reduced from 1.5rem */
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 1002; /* Ensure it's above other mobile nav content */
+        }
+
+        .mobile-nav-close:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* Remove old button animation styles */
+        .animated-button,
+        .animated-button::before,
+        .btn-fill::before {
+            display: none;
+        }
+
+        /* New Global Button Styles */
+        .btn-send,
+        .start-btn,
+        .theme-switch,
+        .portfolio-btn,
+        .social-btn,
+        .nav-link,
+        .mobile-nav-close,
+        .hamburger {
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        /* Glow Hover Effect */
+        .btn-send:hover,
+        .start-btn:hover,
+        .social-btn:hover,
+        .theme-switch:hover {
+            box-shadow: 0 0 15px var(--accent-color),
+                        0 0 30px var(--accent-color),
+                        0 0 45px var(--glow-color);
+            transform: translateY(-2px);
+        }
+
+        /* Button Press Animation */
+        .btn-send:active,
+        .start-btn:active,
+        .social-btn:active,
+        .theme-switch:active,
+        .nav-link:active,
+        .mobile-nav-close:active,
+        .hamburger:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 5px var(--accent-color);
+        }
+
+        /* Special styling for start button */
+        .start-btn {
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+        }
+
+        /* Update send button */
+        .btn-send {
+            background: var(--accent-color);
+            border: none;
+            color: white;
+        }
+
+        /* Update social buttons */
+        .social-btn {
+            background: var(--accent-color);
+            border: none;
+            color: white;
+        }
+
+        /* Theme switch special effect */
+        .theme-switch {
+            transform-origin: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            background: rgba(139, 92, 246, 0.1);
+            transform: rotate(180deg);
+        }
+
+        .theme-switch:active {
+            transform: rotate(180deg) translateY(2px);
+        }
+
+        /* Remove conflicting animations */
+        @keyframes borderRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Update light theme variables */
+        body.light-theme {
+            /* ...existing light theme variables... */
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-gradient: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(250, 250, 250, 0.95));
+            --footer-gradient: var(--nav-gradient);
+        }
+
+        /* Update navbar styles */
+        .navbar {
+            background: var(--nav-gradient) !important;
+        }
+
+        /* Update footer styles */
+        .footer {
+            background: var(--footer-gradient) !important;
+        }
+
+        /* Update navbar button styles */
+        .nav-link,
+        .theme-switch,
+        .hamburger {
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        /* Remove old nav-link hover effect */
+        .nav-link::after {
+            display: none;
+        }
+
+        /* Add glow effect to navbar buttons */
+        .nav-link:hover,
+        .theme-switch:hover,
+        .hamburger:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color),
+                         0 0 20px var(--glow-color);
+            transform: translateY(-2px);
+        }
+
+        /* Add press effect to navbar buttons */
+        .nav-link:active,
+        .theme-switch:active,
+        .hamburger:active {
+            transform: translateY(2px);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        /* Update nav brand hover effect */
+        .nav-brand:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color),
+                         0 0 20px var(--glow-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-brand:active {
+            transform: translateY(2px);
+        }
+
+        /* Special theme switch animation */
+        .theme-switch {
+            transform-origin: center;
+        }
+
+        .theme-switch:hover {
+            transform: rotate(180deg) translateY(-2px);
+        }
+
+        .theme-switch:active {
+            transform: rotate(180deg) translateY(2px);
+        }
+
+        /* Update mobile nav styles */
+        .mobile-nav a:hover,
+        .mobile-nav button:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color),
+                         0 0 20px var(--glow-color);
+            transform: translateY(-2px);
+        }
+
+        .mobile-nav a:active,
+        .mobile-nav button:active {
+            transform: translateY(2px);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        .mobile-nav .theme-switch {
+            margin: 1rem auto;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -801,7 +1082,20 @@
                 <i class="fas fa-moon"></i>
             </button>
         </div>
+        <div class="hamburger" onclick="toggleMobileNav()">
+            <i class="fas fa-bars"></i>
+        </div>
     </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#" onclick="showAbout(); toggleMobileNav();">About</a>
+        <button class="theme-switch" onclick="toggleTheme(); toggleMobileNav();">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
 
     <!-- Welcome Section -->
     <div class="welcome-section" id="welcomeSection">
@@ -879,7 +1173,7 @@
     </div>
 
     <footer class="footer">
-        <div class="copyright">© 2024 EZ.AI by Shaikat S. All rights reserved.</div>
+        <div class="copyright">© 2025 EZ.AI by Shaikat S. All rights reserved.</div>
     </footer>
 
     <script>
@@ -1010,6 +1304,21 @@
                 document.getElementById('userInput').focus();
             }
         });
+
+        function toggleMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+            
+            // Toggle hamburger icon
+            const hamburger = document.querySelector('.hamburger i');
+            if (mobileNav.classList.contains('active')) {
+                hamburger.classList.remove('fa-bars');
+                hamburger.classList.add('fa-times');
+            } else {
+                hamburger.classList.remove('fa-times');
+                hamburger.classList.add('fa-bars');
+            }
+        }
     </script>
 </body>
 </html>
